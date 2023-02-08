@@ -41,3 +41,5 @@ class Fetcher():
 
         return {'error': 'No such section found'},422
     
+    def ret_id_full():
+        pass
