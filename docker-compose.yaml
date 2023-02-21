@@ -1,0 +1,37 @@
+ 
+version: "3"
+services:
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.6.1
+    container_name: elasticsearch
+    environment:
+        - "discovery.type=single-node"
+        - ELASTIC_USERNAME=elastic
+        - ELASTIC_PASSWORD=aAEyZpM0=hxR-GKxFA49
+        - xpack.security.enabled=true
+    ports:
+        - 32769:9200
+        - 32770:9300
+    networks:
+        - elastic
+
+  kibana:
+    image: docker.elastic.co/kibana/kibana:8.6.1
+    container_name: kibana
+    environment:
+      - ELASTICSEARCH_URL="https://elasticsearch:9200"
+      - ELASTICSEARCH_USERNAME=elastic
+      - ELASTICSEARCH_PASSWORD=aAEyZpM0=hxR-GKxFA49
+      - xpack.security.enabled=true
+    links:
+      - elasticsearch
+    ports: 
+      - 5601:5601
+    networks: 
+      - elastic
+    depends_on: 
+      - elasticsearch  
+
+networks:
+  elastic:
+      driver: bridge 
